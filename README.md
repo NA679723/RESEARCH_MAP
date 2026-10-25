@@ -23,9 +23,10 @@ All maps use the same layout and controls.
 
 **Zoom and pan**
 
-- Zoom with the + / − buttons, a two-finger pinch, Ctrl/⌘ + scroll (or trackpad pinch), or a double-click; drag to pan once zoomed in
+- Zoom with the + / − buttons, a two-finger pinch, Ctrl/⌘ + scroll (or trackpad pinch), or a double-click on empty space; drag to pan once zoomed in
 - Clicking a topic in the list zooms to it; "Zoom to results" frames the papers that match a search
 - Zoom in past about 3× and paper titles appear next to the dots
+- Double-click a dot (double-tap on a phone) to open that paper at the top of the list below, marked "Selected on the map"; ✕ closes it
 - "Show on map" on any paper in the list flies the map to it and highlights it; hovering a paper in the list highlights its dot
 
 **Search**

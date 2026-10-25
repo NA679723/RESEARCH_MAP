@@ -87,6 +87,15 @@ input[type=search]:focus-visible{outline:2px solid var(--accent);outline-offset:
 .method code{font-family:var(--mono);font-size:12.5px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 
+.pinned{border:1px solid color-mix(in srgb,var(--accent) 45%,var(--line));border-radius:10px;padding:0 12px 2px;margin:10px 0 12px;background:color-mix(in srgb,var(--accent) 5%,var(--panel))}
+.pinned .p{border-top:0;padding-top:4px}
+.pinhead{display:flex;align-items:center;justify-content:space-between;padding:8px 0 0;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.unpin{font:inherit;font-size:14px;line-height:1;border:0;background:none;color:var(--muted);cursor:pointer;padding:4px 6px;border-radius:6px}
+.unpin:hover{color:var(--fg);background:color-mix(in srgb,var(--fg) 8%,transparent)}
+.tip .tiphint{margin-top:7px;font-size:11.5px;color:var(--muted)}
+.p.jump{animation:jumpflash 2.6s ease-out}
+@keyframes jumpflash{0%,35%{background:color-mix(in srgb,var(--accent) 22%,transparent);box-shadow:inset 3px 0 0 var(--accent)}100%{background:transparent;box-shadow:inset 3px 0 0 transparent}}
+@media (prefers-reduced-motion:reduce){.p.jump{animation:none;background:color-mix(in srgb,var(--accent) 14%,transparent)}}
 
 .wrap{max-width:1600px}
 .mapgrid{grid-template-columns:minmax(0,2.5fr) minmax(300px,1fr)}
@@ -157,7 +166,7 @@ mark{background:color-mix(in srgb,var(--accent) 24%,transparent);color:inherit;b
 
   <section class="grid mapgrid">
     <div class="panel">
-      <div class="maphead"><h2>Topic map</h2><span class="hint">Pinch or Ctrl/⌘ + scroll to zoom · drag to pan · click a topic to zoom to it</span></div>
+      <div class="maphead"><h2>Topic map</h2><span class="hint">Pinch or Ctrl/⌘ + scroll to zoom · drag to pan · double-click a dot to open it in the list</span></div>
       <div class="mapwrap" id="mapwrap">
         <svg id="map" role="img" aria-label="2D map of papers colored by topic cluster" tabindex="0"></svg>
         <div class="mapctl" role="toolbar" aria-label="Map zoom">
@@ -252,7 +261,8 @@ svg.append(gDots, gTitles, gLbl);
 const tip = document.getElementById("tip");
 function esc(s) { return String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
 let vb = { x: 0, y: 0, w: W, h: H }, K = 1, hoverI = -1, suppressClick = false;
-let dotOn = P.map(() => true), emph = false;
+let dotOn = P.map(() => true), emph = false, clickT = 0, lastJump = 0, lastTap = { i: -1, t: 0 };
+const touchUI = matchMedia("(hover: none)").matches;
 const dots = P.map((p, i) => {
   const c = mk("circle");
   c.setAttribute("cx", PX[i]); c.setAttribute("cy", PY[i]); c.setAttribute("r", 4.6);
@@ -260,7 +270,18 @@ const dots = P.map((p, i) => {
   c.setAttribute("stroke", "var(--panel)"); c.setAttribute("stroke-width", 1); c.setAttribute("vector-effect", "non-scaling-stroke");
   c.addEventListener("mouseenter", e => showTip(e, p)); c.addEventListener("mousemove", moveTip);
   c.addEventListener("mouseleave", () => tip.hidden = true);
-  c.addEventListener("click", e => { if (suppressClick) return; showTip(e, p); setActive(p.cluster === active ? null : p.cluster, false); });
+  c.addEventListener("click", e => {
+    if (suppressClick || Date.now() - lastJump < 500) return;
+    showTip(e, p); clearTimeout(clickT);
+    clickT = setTimeout(() => setActive(p.cluster === active ? null : p.cluster, false), 280);
+  });
+  c.addEventListener("dblclick", e => { e.preventDefault(); e.stopPropagation(); clearTimeout(clickT); if (Date.now() - lastJump > 500) jumpToPaper(i); });
+  c.addEventListener("pointerup", e => {       // double-tap on touch screens
+    if (e.pointerType !== "touch" || suppressClick) return;
+    const now = Date.now();
+    if (lastTap.i === i && now - lastTap.t < 320) { clearTimeout(clickT); lastTap = { i: -1, t: 0 }; jumpToPaper(i); }
+    else lastTap = { i, t: now };
+  });
   gDots.appendChild(c); return c;
 });
 // topic labels at each topic's medoid (found once in data space)
@@ -295,7 +316,7 @@ function placeLabels() {
 }
 placeLabels();
 function showTip(e, p) {
-  tip.innerHTML = `<div class="t">${esc(p.title)}</div><div class="m">${esc([p.year, p.venue].filter(Boolean).join(" · "))} · ${esc(C[p.cluster].label)}</div><div>${esc(p.summary)}</div>`;
+  tip.innerHTML = `<div class="t">${esc(p.title)}</div><div class="m">${esc([p.year, p.venue].filter(Boolean).join(" · "))} · ${esc(C[p.cluster].label)}</div>${p.summary ? `<div>${esc(p.summary)}</div>` : ""}<div class="tiphint">${touchUI ? "Double-tap" : "Double-click"} the dot to open it in the list below</div>`;
   tip.hidden = false; moveTip(e);
 }
 function moveTip(e) {
@@ -385,7 +406,7 @@ zin.addEventListener("click", () => zoomAt(1.8, vb.x + vb.w / 2, vb.y + vb.h / 2
 zout.addEventListener("click", () => zoomAt(1 / 1.8, vb.x + vb.w / 2, vb.y + vb.h / 2, true));
 zfit.addEventListener("click", resetView);
 zres.addEventListener("click", () => fitIdx(P.map((p, i) => i).filter(i => dotOn[i])));
-svg.addEventListener("dblclick", e => { e.preventDefault(); const [x, y] = toSvg(e.clientX, e.clientY); zoomAt(2, x, y, true); });
+svg.addEventListener("dblclick", e => { if (e.target instanceof SVGCircleElement) return; e.preventDefault(); const [x, y] = toSvg(e.clientX, e.clientY); zoomAt(2, x, y, true); });
 svg.addEventListener("keydown", e => {
   const c = [vb.x + vb.w / 2, vb.y + vb.h / 2], st = vb.w * .15;
   const act = { "+": () => zoomAt(1.5, ...c, true), "=": () => zoomAt(1.5, ...c, true), "-": () => zoomAt(1 / 1.5, ...c, true), "0": resetView,
@@ -634,15 +655,26 @@ function render() {
   countEl.textContent = f ? `${idx.length.toLocaleString()} of ${scope.toLocaleString()} papers` : `${scope.toLocaleString()} papers`;
   resetBtn.hidden = !f;
   zres.hidden = !f || !idx.length || idx.length === P.length;
-  list.innerHTML = idx.length ? idx.slice(0, shown).map(rowHTML).join("")
-    : `<p class="hint" style="padding:14px 0">No papers match${q.value.trim() ? ` “${esc(q.value.trim())}”` : " these filters"}${active !== null ? " in this topic" : ""}.</p>`;
+  const pin = pinned >= 0 ? `<div class="pinned"><div class="pinhead"><span>Selected on the map</span><button type="button" class="unpin" aria-label="Close selected paper">✕</button></div>${rowHTML(pinned)}</div>` : "";
+  list.innerHTML = pin + (idx.length ? idx.filter(i => i !== pinned).slice(0, shown).map(rowHTML).join("")
+    : `<p class="hint" style="padding:14px 0">No papers match${q.value.trim() ? ` “${esc(q.value.trim())}”` : " these filters"}${active !== null ? " in this topic" : ""}.</p>`);
   const rest = idx.length - shown;
   moreBtn.hidden = rest <= 0;
   moreBtn.textContent = `Show ${Math.min(rest, PAGE * 2)} more (${rest.toLocaleString()} left)`;
   $("csv").disabled = !idx.length;
   drawYearBars(); didYouMean(idx.length); saveHash();
 }
-function update() { shown = PAGE; compute(); render(); }
+function update() { shown = PAGE; pinned = -1; compute(); render(); }
+// double-click a dot: pin its paper at the top of the list (current search stays as it is), scroll there and flash it
+let pinned = -1;
+function jumpToPaper(i) {
+  lastJump = Date.now(); tip.hidden = true; closeSugg();
+  pinned = i; render();
+  const art = list.querySelector(".pinned article"); if (!art) return;
+  art.classList.remove("jump"); void art.offsetWidth; art.classList.add("jump");
+  list.querySelector(".pinned").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+  setHover(i); clearTimeout(jumpToPaper.t); jumpToPaper.t = setTimeout(() => setHover(-1), 2600);
+}
 // results by year: bars ignore the year filter so the whole distribution stays visible
 function drawYearBars() {
   const last = YMAX, first = Math.max(YMIN, last - 19), early = YMIN < first;
@@ -736,6 +768,7 @@ let timer; q.addEventListener("input", () => { suggest(); clearTimeout(timer); t
 moreBtn.addEventListener("click", () => { shown += PAGE * 2; render(); });
 resetBtn.addEventListener("click", () => { q.value = ""; yFrom.value = YMIN; yTo.value = YMAX; hasLink.checked = false; venueSel.value = ""; sortSel.value = "rel"; update(); });
 list.addEventListener("click", e => {
+  if (e.target.closest(".unpin")) { pinned = -1; render(); return; }
   const a = e.target.closest(".au"), v = e.target.closest(".ve"), l = e.target.closest(".loc");
   if (a) { q.value = `author:"${a.dataset.a}"`; update(); $("listpanel").scrollIntoView({ behavior: reduce ? "auto" : "smooth" }); }
   else if (v) { venueSel.value = v.dataset.v; update(); }
