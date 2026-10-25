@@ -6,7 +6,7 @@ Interactive literature maps of causal machine learning and interpretability rese
 
 | # | Topic | Papers | Topics | Live link |
 |---|---|---:|---:|---|
-| 1 | **Causal Inference** | 5,627 | 21 | https://na679723.github.io/RESEARCH_MAP/causal-inference-atlas_1.html |
+| 1 | **Causal Inference** | 5,638 | 21 | https://na679723.github.io/RESEARCH_MAP/causal-inference-atlas_1.html |
 | 2 | **Causal Representation Learning** | 703 | 20 | https://na679723.github.io/RESEARCH_MAP/ |
 | 3 | **Causal Reinforcement Learning** | 1,061 | 20 | https://na679723.github.io/RESEARCH_MAP/causal-reinforcement-learning.html |
 | 4 | **Causal Mediation Analysis** | 884 | 20 | https://na679723.github.io/RESEARCH_MAP/causal-mediation-analysis.html |
