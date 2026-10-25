@@ -88,6 +88,11 @@ input[type=search]:focus-visible{outline:2px solid var(--accent);outline-offset:
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 
 
+.wrap{max-width:1600px}
+.mapgrid{grid-template-columns:minmax(0,2.5fr) minmax(300px,1fr)}
+@media (max-width:1100px){.mapgrid{grid-template-columns:minmax(0,1fr)}}
+.mapgrid .legend{max-height:none}
+
 :root{--c20:#9c6b1f;--c21:#3b8f4f;--c22:#b0358a;--c23:#4a7fa8;--c24:#c0605f;--c25:#6d6fb8;--c26:#2f8f8a;--c27:#8a7a2a}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--c20:#d8a75a;--c21:#72c98a;--c22:#e070bf;--c23:#82b4dc;--c24:#ee9a9a;--c25:#a2a4ec;--c26:#66cfc8;--c27:#cdb66a}}
 :root[data-theme="dark"]{--c20:#d8a75a;--c21:#72c98a;--c22:#e070bf;--c23:#82b4dc;--c24:#ee9a9a;--c25:#a2a4ec;--c26:#66cfc8;--c27:#cdb66a}
@@ -150,7 +155,7 @@ mark{background:color-mix(in srgb,var(--accent) 24%,transparent);color:inherit;b
     <div class="stats" id="stats"></div>
   </header>
 
-  <section class="grid">
+  <section class="grid mapgrid">
     <div class="panel">
       <div class="maphead"><h2>Topic map</h2><span class="hint">Pinch or Ctrl/⌘ + scroll to zoom · drag to pan · click a topic to zoom to it</span></div>
       <div class="mapwrap" id="mapwrap">
@@ -224,12 +229,22 @@ document.getElementById("stats").innerHTML =
   `<span><b>${Math.min(...P.filter(p=>p.year).map(p=>+p.year))}–${Math.max(...P.filter(p=>p.year).map(p=>+p.year))}</b> years covered</span>`;
 
 // ---- map (zoom & pan) ----
-const W = 760, H = 560, pad = 28, svg = document.getElementById("map"), wrap = document.getElementById("mapwrap");
-svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+const pad = 28, svg = document.getElementById("map"), wrap = document.getElementById("mapwrap");
 const xs = P.map(p => p.x), ys = P.map(p => p.y);
 const [x0, x1, y0, y1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
-const sx = v => pad + (v - x0) / (x1 - x0 || 1) * (W - 2 * pad), sy = v => pad + (v - y0) / (y1 - y0 || 1) * (H - 2 * pad);
-const PX = P.map(p => sx(p.x)), PY = P.map(p => sy(p.y));
+// the drawing area follows the panel: about one unit per screen pixel, wide on desktop, taller on phones
+function dims() {
+  const cw = wrap.getBoundingClientRect().width || 760;
+  const w = Math.round(Math.max(560, Math.min(1400, cw)));
+  return [w, Math.round(w * (cw >= 900 ? .6 : cw >= 600 ? .72 : .95))];
+}
+let [W, H] = dims(), PX = [], PY = [];
+function computePos() {
+  PX = P.map(p => pad + (p.x - x0) / (x1 - x0 || 1) * (W - 2 * pad));
+  PY = P.map(p => pad + (p.y - y0) / (y1 - y0 || 1) * (H - 2 * pad));
+}
+computePos();
+svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
 const NS = "http://www.w3.org/2000/svg";
 const mk = (tag, cls) => { const e = document.createElementNS(NS, tag); if (cls) e.setAttribute("class", cls); return e; };
 const gDots = mk("g"), gTitles = mk("g"), gLbl = mk("g");
@@ -248,29 +263,37 @@ const dots = P.map((p, i) => {
   c.addEventListener("click", e => { if (suppressClick) return; showTip(e, p); setActive(p.cluster === active ? null : p.cluster, false); });
   gDots.appendChild(c); return c;
 });
-// topic labels at each topic's medoid
-const lbls = C.map(cl => {
-  const m = P.map((p, i) => i).filter(i => P[i].cluster === cl.id).map(i => [PX[i], PY[i]]);
+// topic labels at each topic's medoid (found once in data space)
+const MED = C.map(cl => {
+  const m = P.map((p, i) => i).filter(i => P[i].cluster === cl.id);
   let best = m[0], bd = Infinity;
-  m.forEach(a => { const s = m.reduce((t, b) => t + Math.hypot(a[0] - b[0], a[1] - b[1]), 0); if (s < bd) { bd = s; best = a; } });
+  m.forEach(a => { const s = m.reduce((t, b) => t + Math.hypot((P[a].x - P[b].x) / (x1 - x0 || 1), (P[a].y - P[b].y) / (y1 - y0 || 1)), 0); if (s < bd) { bd = s; best = a; } });
+  return best;
+});
+const lbls = C.map(cl => {
   const t = mk("text", "lbl");
-  t.setAttribute("y", Math.max(best[1] - 9, 14)); t.setAttribute("text-anchor", "middle"); t.setAttribute("fill", col(cl.id));
+  t.setAttribute("text-anchor", "middle"); t.setAttribute("fill", col(cl.id));
   t.textContent = cl.short || cl.label; gLbl.appendChild(t);
-  const half = (t.getComputedTextLength ? t.getComputedTextLength() : 80) / 2 + 6;
-  t.setAttribute("x", Math.min(Math.max(best[0], half), W - half));
   return t;
 });
-(function () { // nudge overlapping labels apart
-  const placed = [];
+function placeLabels() {
+  const s0 = Math.min(1.6, Math.max(1, W / (svg.getBoundingClientRect().width || W)));
+  lbls.forEach((t, c) => {
+    t.style.fontSize = 12.5 * s0 + "px"; t.style.strokeWidth = 4 * s0 + "px";
+    const i = MED[c], half = (t.getComputedTextLength ? t.getComputedTextLength() : 80) / 2 + 6;
+    t.setAttribute("x", Math.min(Math.max(PX[i], half), W - half));
+    t.setAttribute("y", Math.max(PY[i] - 9 * s0, 14 * s0));
+  });
+  const placed = [];          // nudge overlapping labels apart
   lbls.forEach(t => {
     const b = t.getBBox(); let y = +t.getAttribute("y"), dy = 0, k = 0;
     const hit = yy => placed.some(p => !(b.x + b.width < p.x || p.x + p.w < b.x || yy - b.height > p.y || yy < p.y - p.h));
-    while (hit(y + dy) && k < 30) { k++; dy = (k % 2 ? -1 : 1) * Math.ceil(k / 2) * 8; }
-    y = Math.min(Math.max(y + dy, 14), H - 4); t.setAttribute("y", y);
+    while (hit(y + dy) && k < 30) { k++; dy = (k % 2 ? -1 : 1) * Math.ceil(k / 2) * 8 * s0; }
+    y = Math.min(Math.max(y + dy, 14 * s0), H - 4); t.setAttribute("y", y);
     placed.push({ x: b.x, w: b.width, y: y, h: b.height });
   });
-})();
-const LBL_XY = lbls.map(t => [+t.getAttribute("x"), +t.getAttribute("y")]);
+}
+placeLabels();
 function showTip(e, p) {
   tip.innerHTML = `<div class="t">${esc(p.title)}</div><div class="m">${esc([p.year, p.venue].filter(Boolean).join(" · "))} · ${esc(C[p.cluster].label)}</div><div>${esc(p.summary)}</div>`;
   tip.hidden = false; moveTip(e);
@@ -761,7 +784,25 @@ function setActive(c, zoom) {
   if (zoom) { if (c === null) resetView(); else fitIdx(P.map((p, i) => i).filter(i => P[i].cluster === c)); }
 }
 loadHash(); compute(); render(); applyView();
-let rsz; addEventListener("resize", () => { clearTimeout(rsz); rsz = setTimeout(applyView, 150); });
+// keep the legend as tall as the map beside it (or a fixed height when stacked below)
+function syncLegend() {
+  const lp = legend.closest(".panel"), mp = wrap.closest(".panel");
+  const beside = lp.getBoundingClientRect().top < mp.getBoundingClientRect().bottom - 60;
+  legend.style.maxHeight = beside ? Math.max(320, mp.getBoundingClientRect().bottom - legend.getBoundingClientRect().top - 16) + "px" : "560px";
+}
+function relayout() {
+  const [w, h] = dims();
+  if (w !== W || h !== H) {
+    const fx = w / W, fy = h / H; W = w; H = h; computePos();
+    dots.forEach((d, i) => { d.setAttribute("cx", PX[i]); d.setAttribute("cy", PY[i]); });
+    vb = clampVB({ x: vb.x * fx, y: vb.y * fy, w: vb.w * fx, h: vb.w * fx * H / W });
+    placeLabels();
+  }
+  applyView(); syncLegend();
+}
+syncLegend();
+let rsz; addEventListener("resize", () => { clearTimeout(rsz); rsz = setTimeout(relayout, 150); });
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { placeLabels(); applyView(); syncLegend(); });
 if (active !== null) fitIdx(P.map((p, i) => i).filter(i => P[i].cluster === active));
 </script>
 
