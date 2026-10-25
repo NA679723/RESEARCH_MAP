@@ -86,6 +86,56 @@ input[type=search]:focus-visible{outline:2px solid var(--accent);outline-offset:
 .method{font-size:13.5px;color:var(--muted);max-width:80ch}
 .method code{font-family:var(--mono);font-size:12.5px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+.mapwrap{position:relative}
+#map{cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none;border-radius:6px}
+#map:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mapwrap.dragging #map{cursor:grabbing}
+#map .lbl{transition:opacity .15s}
+#map .ttl{font-family:var(--body);fill:var(--fg);paint-order:stroke;stroke:var(--panel);pointer-events:none}
+.mapctl{position:absolute;top:6px;right:6px;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--panel);box-shadow:0 2px 8px rgb(0 0 0 / .08)}
+.mapctl button{display:grid;place-items:center;font:inherit;font-size:18px;line-height:1;width:36px;height:34px;border:0;background:var(--panel);color:var(--fg);cursor:pointer;padding:0}
+.mapctl button+button{border-top:1px solid var(--line)}
+.mapctl button:hover:not(:disabled){background:color-mix(in srgb,var(--fg) 7%,var(--panel))}
+.mapctl button:disabled{color:var(--muted);opacity:.45;cursor:default}
+.mapctl button:focus-visible,.fitres:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.fitres{position:absolute;left:6px;top:6px;font:inherit;font-size:12.5px;padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--fg);cursor:pointer;box-shadow:0 2px 8px rgb(0 0 0 / .08)}
+.fitres:hover{border-color:var(--accent);color:var(--accent)}
+.zoomlvl{position:absolute;right:6px;bottom:6px;font-family:var(--mono);font-size:11.5px;color:var(--muted);background:color-mix(in srgb,var(--panel) 85%,transparent);padding:2px 6px;border-radius:4px;pointer-events:none}
+.maphint{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);width:max-content;max-width:90%;padding:7px 12px;border-radius:8px;background:color-mix(in srgb,var(--fg) 85%,transparent);color:var(--panel);font-size:13px;pointer-events:none}
+.qwrap{position:relative;width:min(400px,100%)}
+.qwrap input{width:100%}
+.sugg{position:absolute;z-index:15;left:0;right:0;top:calc(100% + 4px);margin:0;padding:4px;list-style:none;background:var(--panel);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px rgb(0 0 0 / .16);max-height:340px;overflow:auto}
+.sugg li{display:flex;gap:10px;align-items:baseline;padding:7px 9px;border-radius:6px;cursor:pointer;font-size:13.5px}
+.sugg li[aria-selected=true],.sugg li:hover{background:color-mix(in srgb,var(--accent) 13%,transparent)}
+.sugg .k{flex:none;width:46px;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.sugg .v{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sugg .c{margin-left:auto;flex:none;font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.filters{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin-top:12px;font-size:13px;color:var(--muted)}
+.filters label{display:inline-flex;gap:6px;align-items:center}
+.filters select{font:inherit;font-size:13px;padding:4px 6px;border-radius:6px;border:1px solid var(--line);background:var(--panel);color:var(--fg);max-width:190px}
+.filters select:focus-visible,.filters input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.filters input[type=checkbox]{accent-color:var(--accent);width:15px;height:15px;margin:0}
+#count{margin-left:auto;font-family:var(--mono);font-size:12.5px;font-variant-numeric:tabular-nums}
+.yearbars{display:flex;align-items:flex-end;gap:2px;height:46px;margin-top:14px}
+.yearbars button{flex:1;min-width:0;border:0;padding:0;border-radius:2px 2px 0 0;background:color-mix(in srgb,var(--accent) 60%,transparent);cursor:pointer}
+.yearbars button.out{background:color-mix(in srgb,var(--fg) 13%,transparent)}
+.yearbars button:hover{background:var(--accent)}
+.yearbars button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.yearaxis{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:4px}
+.searchhelp{margin:10px 0 4px;font-size:12.5px;color:var(--muted)}
+.searchhelp code{font-family:var(--mono);font-size:11.5px;padding:0 4px;border:1px solid var(--line);border-radius:4px}
+.dym{margin:8px 0 0;font-size:14px}
+.dym button{font:inherit;color:var(--accent);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
+mark{background:color-mix(in srgb,var(--accent) 24%,transparent);color:inherit;border-radius:2px;padding:0 1px}
+.p .meta .au,.p .meta .ve{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;border-bottom:1px dotted color-mix(in srgb,var(--muted) 70%,transparent)}
+.p .meta .au:hover,.p .meta .ve:hover{color:var(--accent);border-bottom-color:var(--accent)}
+.p .meta .loc{font:inherit;font-size:11.5px;padding:1px 9px;border-radius:999px;border:1px solid var(--line);background:none;color:var(--muted);cursor:pointer;margin-left:auto}
+.p .meta .loc:hover{color:var(--accent);border-color:var(--accent)}
+.p.hov{background:color-mix(in srgb,var(--accent) 6%,transparent)}
+.listfoot{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:14px}
+@media (max-width:560px){#count{margin-left:0;width:100%}.p .meta .loc{margin-left:0}}
+@media (hover:none){.kbdhint{display:none}}
 </style>
 
 <div class="wrap">
@@ -98,8 +148,18 @@ input[type=search]:focus-visible{outline:2px solid var(--accent);outline-offset:
 
   <section class="grid">
     <div class="panel">
-      <div class="maphead"><h2>Topic map</h2><span class="hint">Hover a dot for the paper · click a topic to isolate it</span></div>
-      <svg id="map" role="img" aria-label="2D map of papers colored by topic cluster"></svg>
+      <div class="maphead"><h2>Topic map</h2><span class="hint">Pinch or Ctrl/⌘ + scroll to zoom · drag to pan · click a topic to zoom to it</span></div>
+      <div class="mapwrap" id="mapwrap">
+        <svg id="map" role="img" aria-label="2D map of papers colored by topic cluster" tabindex="0"></svg>
+        <div class="mapctl" role="toolbar" aria-label="Map zoom">
+          <button type="button" id="zin" aria-label="Zoom in" title="Zoom in">+</button>
+          <button type="button" id="zout" aria-label="Zoom out" title="Zoom out">−</button>
+          <button type="button" id="zfit" aria-label="Reset view" title="Reset view"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
+        </div>
+        <button type="button" class="fitres" id="zres" hidden>Zoom to results</button>
+        <div class="zoomlvl" id="zlvl" hidden></div>
+        <div class="maphint" id="maphint" hidden></div>
+      </div>
     </div>
     <div class="panel">
       <div class="maphead"><h2>Topics</h2><button class="clear" id="showall" type="button">Show all</button></div>
@@ -118,12 +178,28 @@ input[type=search]:focus-visible{outline:2px solid var(--accent);outline-offset:
     </div>
   </section>
 
-  <section class="panel">
+  <section class="panel" id="listpanel">
     <div class="listhead">
       <h2 id="listtitle">All papers</h2>
-      <input type="search" id="q" placeholder="Search titles, summaries, authors" aria-label="Search papers">
+      <div class="qwrap">
+        <input type="search" id="q" placeholder="Search titles, summaries, authors, venues" aria-label="Search papers" autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugg">
+        <ul class="sugg" id="sugg" role="listbox" aria-label="Suggestions" hidden></ul>
+      </div>
     </div>
+    <div class="filters">
+      <label>Years <select id="y0" aria-label="From year"></select>–<select id="y1" aria-label="To year"></select></label>
+      <label>Venue <select id="venue" aria-label="Venue"><option value="">All venues</option></select></label>
+      <label>Sort <select id="sort" aria-label="Sort papers"><option value="rel">Best match</option><option value="new">Newest</option><option value="old">Oldest</option><option value="az">Title A–Z</option></select></label>
+      <label><input type="checkbox" id="haslink"> Has link</label>
+      <button class="clear" id="reset" type="button" hidden>Clear search</button>
+      <span id="count" aria-live="polite"></span>
+    </div>
+    <div class="yearbars" id="yearbars" role="group" aria-label="Matching papers by year; click a bar to filter"></div>
+    <div class="yearaxis" id="yearaxis"></div>
+    <p class="searchhelp">All words must match · <code>"exact phrase"</code> · <code>a OR b</code> · <code>-word</code> to exclude · <code>author:</code> <code>title:</code> <code>venue:</code> <code>year:</code> for one field<span class="kbdhint"> · press <code>/</code> to search</span></p>
+    <p class="dym" id="dym" hidden></p>
     <div class="papers" id="papers"></div>
+    <div class="listfoot"><button class="clear more" id="more" type="button" hidden></button><button class="clear" id="csv" type="button">Download results (CSV)</button></div>
   </section>
 
   <section class="panel">
@@ -143,106 +219,538 @@ document.getElementById("stats").innerHTML =
   `<span><b>${P.length}</b> papers</span><span><b>${C.length}</b> topics</span>` +
   `<span><b>${Math.min(...P.filter(p=>p.year).map(p=>+p.year))}–${Math.max(...P.filter(p=>p.year).map(p=>+p.year))}</b> years covered</span>`;
 
-// ---- map ----
-const W = 760, H = 560, pad = 28, svg = document.getElementById("map");
+// ---- map (zoom & pan) ----
+const W = 760, H = 560, pad = 28, svg = document.getElementById("map"), wrap = document.getElementById("mapwrap");
 svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-const xs = P.map(p=>p.x), ys = P.map(p=>p.y);
-const [x0,x1,y0,y1] = [Math.min(...xs),Math.max(...xs),Math.min(...ys),Math.max(...ys)];
-const sx = v => pad + (v-x0)/(x1-x0||1)*(W-2*pad), sy = v => pad + (v-y0)/(y1-y0||1)*(H-2*pad);
+const xs = P.map(p => p.x), ys = P.map(p => p.y);
+const [x0, x1, y0, y1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
+const sx = v => pad + (v - x0) / (x1 - x0 || 1) * (W - 2 * pad), sy = v => pad + (v - y0) / (y1 - y0 || 1) * (H - 2 * pad);
+const PX = P.map(p => sx(p.x)), PY = P.map(p => sy(p.y));
 const NS = "http://www.w3.org/2000/svg";
-const dots = P.map((p,i)=>{
-  const c = document.createElementNS(NS,"circle");
-  c.setAttribute("cx",sx(p.x)); c.setAttribute("cy",sy(p.y)); c.setAttribute("r",4.6);
-  c.setAttribute("fill",col(p.cluster)); c.setAttribute("fill-opacity",.82);
-  c.setAttribute("stroke","var(--panel)"); c.setAttribute("stroke-width",1);
-  c.addEventListener("mouseenter",e=>showTip(e,p)); c.addEventListener("mousemove",moveTip);
-  c.addEventListener("mouseleave",()=>tip.hidden=true);
-  c.addEventListener("click",e=>{showTip(e,p); setActive(p.cluster===active?null:p.cluster)});
-  svg.appendChild(c); return c;
+const mk = (tag, cls) => { const e = document.createElementNS(NS, tag); if (cls) e.setAttribute("class", cls); return e; };
+const gDots = mk("g"), gTitles = mk("g"), gLbl = mk("g");
+svg.append(gDots, gTitles, gLbl);
+const tip = document.getElementById("tip");
+function esc(s) { return String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+let vb = { x: 0, y: 0, w: W, h: H }, K = 1, hoverI = -1, suppressClick = false;
+let dotOn = P.map(() => true), emph = false;
+const dots = P.map((p, i) => {
+  const c = mk("circle");
+  c.setAttribute("cx", PX[i]); c.setAttribute("cy", PY[i]); c.setAttribute("r", 4.6);
+  c.setAttribute("fill", col(p.cluster)); c.setAttribute("fill-opacity", .82);
+  c.setAttribute("stroke", "var(--panel)"); c.setAttribute("stroke-width", 1); c.setAttribute("vector-effect", "non-scaling-stroke");
+  c.addEventListener("mouseenter", e => showTip(e, p)); c.addEventListener("mousemove", moveTip);
+  c.addEventListener("mouseleave", () => tip.hidden = true);
+  c.addEventListener("click", e => { if (suppressClick) return; showTip(e, p); setActive(p.cluster === active ? null : p.cluster, false); });
+  gDots.appendChild(c); return c;
 });
-// cluster labels at each cluster's medoid on the map
-const lbls = C.map(cl=>{
-  const m = P.filter(p=>p.cluster===cl.id).map(p=>[sx(p.x),sy(p.y)]);
-  let best=m[0], bd=Infinity;
-  m.forEach(a=>{const s=m.reduce((t,b)=>t+Math.hypot(a[0]-b[0],a[1]-b[1]),0); if(s<bd){bd=s;best=a}});
-  const t = document.createElementNS(NS,"text");
-  t.setAttribute("class","lbl"); t.setAttribute("x",Math.min(Math.max(best[0],80),W-80)); t.setAttribute("y",Math.max(best[1]-9,14));
-  t.setAttribute("text-anchor","middle"); t.setAttribute("fill",col(cl.id)); t.textContent = cl.short || cl.label;
-  svg.appendChild(t);
-  const half = (t.getComputedTextLength ? t.getComputedTextLength() : 80)/2 + 6;
-  t.setAttribute("x", Math.min(Math.max(best[0], half), W-half));
+// topic labels at each topic's medoid
+const lbls = C.map(cl => {
+  const m = P.map((p, i) => i).filter(i => P[i].cluster === cl.id).map(i => [PX[i], PY[i]]);
+  let best = m[0], bd = Infinity;
+  m.forEach(a => { const s = m.reduce((t, b) => t + Math.hypot(a[0] - b[0], a[1] - b[1]), 0); if (s < bd) { bd = s; best = a; } });
+  const t = mk("text", "lbl");
+  t.setAttribute("y", Math.max(best[1] - 9, 14)); t.setAttribute("text-anchor", "middle"); t.setAttribute("fill", col(cl.id));
+  t.textContent = cl.short || cl.label; gLbl.appendChild(t);
+  const half = (t.getComputedTextLength ? t.getComputedTextLength() : 80) / 2 + 6;
+  t.setAttribute("x", Math.min(Math.max(best[0], half), W - half));
   return t;
 });
-// nudge overlapping labels apart
-(function(){
-  const placed=[];
-  lbls.forEach(t=>{
-    const b=t.getBBox(); let y=+t.getAttribute("y"), dy=0, k=0;
-    const hit=yy=>placed.some(p=>!(b.x+b.width<p.x||p.x+p.w<b.x||yy-b.height>p.y||yy<p.y-p.h));
-    while(hit(y+dy) && k<30){k++; dy = (k%2?-1:1)*Math.ceil(k/2)*8;}
-    y=Math.min(Math.max(y+dy,14),H-4); t.setAttribute("y",y);
-    placed.push({x:b.x,w:b.width,y:y,h:b.height});
+(function () { // nudge overlapping labels apart
+  const placed = [];
+  lbls.forEach(t => {
+    const b = t.getBBox(); let y = +t.getAttribute("y"), dy = 0, k = 0;
+    const hit = yy => placed.some(p => !(b.x + b.width < p.x || p.x + p.w < b.x || yy - b.height > p.y || yy < p.y - p.h));
+    while (hit(y + dy) && k < 30) { k++; dy = (k % 2 ? -1 : 1) * Math.ceil(k / 2) * 8; }
+    y = Math.min(Math.max(y + dy, 14), H - 4); t.setAttribute("y", y);
+    placed.push({ x: b.x, w: b.width, y: y, h: b.height });
   });
 })();
-const tip = document.getElementById("tip");
-function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
-function showTip(e,p){
-  tip.innerHTML = `<div class="t">${esc(p.title)}</div><div class="m">${esc([p.year,p.venue].filter(Boolean).join(" · "))} · ${esc(C[p.cluster].label)}</div><div>${esc(p.summary)}</div>`;
-  tip.hidden=false; moveTip(e);
+const LBL_XY = lbls.map(t => [+t.getAttribute("x"), +t.getAttribute("y")]);
+function showTip(e, p) {
+  tip.innerHTML = `<div class="t">${esc(p.title)}</div><div class="m">${esc([p.year, p.venue].filter(Boolean).join(" · "))} · ${esc(C[p.cluster].label)}</div><div>${esc(p.summary)}</div>`;
+  tip.hidden = false; moveTip(e);
 }
-function moveTip(e){
-  const r = tip.getBoundingClientRect(); let x = e.clientX+14, y = e.clientY+14;
-  if (x+r.width > innerWidth-8) x = e.clientX - r.width - 14;
-  if (y+r.height > innerHeight-8) y = Math.max(8, e.clientY - r.height - 14);
-  tip.style.left = Math.max(8,x)+"px"; tip.style.top = y+"px";
+function moveTip(e) {
+  const r = tip.getBoundingClientRect(); let x = e.clientX + 14, y = e.clientY + 14;
+  if (x + r.width > innerWidth - 8) x = e.clientX - r.width - 14;
+  if (y + r.height > innerHeight - 8) y = Math.max(8, e.clientY - r.height - 14);
+  tip.style.left = Math.max(8, x) + "px"; tip.style.top = y + "px";
+}
+document.addEventListener("pointerdown", e => { if (!(e.target instanceof SVGCircleElement)) tip.hidden = true; });
+
+const KMAX = 40, reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+function clampVB(v) {
+  const k = Math.min(Math.max(W / v.w, 1), KMAX), w = W / k, h = H / k;
+  const m = k > 1.001 ? .25 : 0;
+  return { x: Math.min(Math.max(v.x, -w * m), W - w + w * m), y: Math.min(Math.max(v.y, -h * m), H - h + h * m), w, h };
+}
+let S = 1; // extra scale so text and dots stay readable when the map is drawn small (phones)
+function sizeDot(i) {
+  const s = Math.pow(K, .3) / K * Math.sqrt(S);
+  let r = (dotOn[i] && emph ? 5.6 : 4.6) * s;
+  if (i === hoverI) r *= 2;
+  dots[i].setAttribute("r", r);
+}
+const zin = document.getElementById("zin"), zout = document.getElementById("zout"), zfit = document.getElementById("zfit"),
+  zres = document.getElementById("zres"), zlvl = document.getElementById("zlvl"), hintEl = document.getElementById("maphint");
+function applyView() {
+  svg.setAttribute("viewBox", `${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
+  K = W / vb.w;
+  S = Math.min(1.6, Math.max(1, W / (svg.getBoundingClientRect().width || W)));
+  for (let i = 0; i < dots.length; i++) sizeDot(i);
+  lbls.forEach(t => { t.style.fontSize = 12.5 * S / K + "px"; t.style.strokeWidth = 4 * S / K + "px"; });
+  zout.disabled = zfit.disabled = K <= 1.001; zin.disabled = K >= KMAX - .01;
+  svg.style.touchAction = K > 1.001 ? "none" : "pan-y";
+  zlvl.hidden = K <= 1.001; zlvl.textContent = `${K < 10 ? K.toFixed(1) : Math.round(K)}×`;
+  scheduleTitles();
+}
+let anim = 0;
+function animateTo(t) {
+  t = clampVB(t); cancelAnimationFrame(anim);
+  if (reduce) { vb = t; applyView(); return; }
+  const f = { ...vb }, t0 = performance.now(), D = 320;
+  const step = now => {
+    const u = Math.min(1, (now - t0) / D), e = 1 - Math.pow(1 - u, 3);
+    const w = Math.exp(Math.log(f.w) + (Math.log(t.w) - Math.log(f.w)) * e);
+    const cx = (f.x + f.w / 2) + ((t.x + t.w / 2) - (f.x + f.w / 2)) * e, cy = (f.y + f.h / 2) + ((t.y + t.h / 2) - (f.y + f.h / 2)) * e;
+    vb = { x: cx - w / 2, y: cy - w * H / W / 2, w, h: w * H / W }; applyView();
+    if (u < 1) anim = requestAnimationFrame(step);
+  };
+  anim = requestAnimationFrame(step);
+}
+function zoomAt(f, cx, cy, animate) {
+  const w = Math.min(W, Math.max(W / KMAX, vb.w / f));
+  const r = (cx - vb.x) / vb.w, s = (cy - vb.y) / vb.h;
+  const t = { x: cx - r * w, y: cy - s * w * H / W, w, h: w * H / W };
+  if (animate) animateTo(t); else { vb = clampVB(t); applyView(); }
+}
+function fitBox(bx0, by0, bx1, by1) {
+  let w = Math.max(bx1 - bx0, 60) + 70, h = Math.max(by1 - by0, 44) + 60;
+  if (w / h > W / H) h = w * H / W; else w = h * W / H;
+  w = Math.min(w, W);
+  const cx = (bx0 + bx1) / 2, cy = (by0 + by1) / 2;
+  animateTo({ x: cx - w / 2, y: cy - w * H / W / 2, w, h: w * H / W });
+}
+function fitIdx(ix) {
+  if (!ix.length) return;
+  let a = Infinity, b = Infinity, c = -Infinity, d = -Infinity;
+  ix.forEach(i => { a = Math.min(a, PX[i]); b = Math.min(b, PY[i]); c = Math.max(c, PX[i]); d = Math.max(d, PY[i]); });
+  fitBox(a, b, c, d);
+}
+const resetView = () => animateTo({ x: 0, y: 0, w: W, h: H });
+function locate(i) {
+  const w = W / 6;
+  animateTo({ x: PX[i] - w / 2, y: PY[i] - w * H / W / 2, w, h: w * H / W });
+  setHover(i);
+  wrap.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+  clearTimeout(locate.t); locate.t = setTimeout(() => setHover(-1), 2600);
+}
+function toSvg(cx, cy) { const r = svg.getBoundingClientRect(); return [vb.x + (cx - r.left) / r.width * vb.w, vb.y + (cy - r.top) / r.height * vb.h]; }
+zin.addEventListener("click", () => zoomAt(1.8, vb.x + vb.w / 2, vb.y + vb.h / 2, true));
+zout.addEventListener("click", () => zoomAt(1 / 1.8, vb.x + vb.w / 2, vb.y + vb.h / 2, true));
+zfit.addEventListener("click", resetView);
+zres.addEventListener("click", () => fitIdx(P.map((p, i) => i).filter(i => dotOn[i])));
+svg.addEventListener("dblclick", e => { e.preventDefault(); const [x, y] = toSvg(e.clientX, e.clientY); zoomAt(2, x, y, true); });
+svg.addEventListener("keydown", e => {
+  const c = [vb.x + vb.w / 2, vb.y + vb.h / 2], st = vb.w * .15;
+  const act = { "+": () => zoomAt(1.5, ...c, true), "=": () => zoomAt(1.5, ...c, true), "-": () => zoomAt(1 / 1.5, ...c, true), "0": resetView,
+    ArrowLeft: () => animateTo({ ...vb, x: vb.x - st }), ArrowRight: () => animateTo({ ...vb, x: vb.x + st }),
+    ArrowUp: () => animateTo({ ...vb, y: vb.y - st }), ArrowDown: () => animateTo({ ...vb, y: vb.y + st }) }[e.key];
+  if (act) { e.preventDefault(); act(); }
+});
+let hintT;
+function flashHint(msg) { hintEl.textContent = msg; hintEl.hidden = false; clearTimeout(hintT); hintT = setTimeout(() => hintEl.hidden = true, 1400); }
+const isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
+svg.addEventListener("wheel", e => {
+  if (e.ctrlKey || e.metaKey) {
+    e.preventDefault(); cancelAnimationFrame(anim);
+    const [x, y] = toSvg(e.clientX, e.clientY);
+    zoomAt(Math.exp(-e.deltaY * (e.deltaMode ? .05 : .0025)), x, y, false);
+  } else flashHint(`${isMac ? "⌘" : "Ctrl"} + scroll to zoom · drag to pan`);
+}, { passive: false });
+// drag to pan, two-finger pinch to zoom
+const ptrs = new Map(); let pan = null, pinch = null;
+svg.addEventListener("pointerdown", e => {
+  if (e.pointerType === "mouse" && e.button !== 0) return;
+  ptrs.set(e.pointerId, [e.clientX, e.clientY]);
+  if (ptrs.size === 1) { pan = { x: e.clientX, y: e.clientY, vb: { ...vb }, id: e.pointerId, on: false }; suppressClick = false; }
+  if (ptrs.size === 2) {
+    const [a, b] = [...ptrs.values()];
+    pinch = { d: Math.hypot(a[0] - b[0], a[1] - b[1]) || 1, mid: toSvg((a[0] + b[0]) / 2, (a[1] + b[1]) / 2), vb: { ...vb } };
+    pan = null; suppressClick = true; cancelAnimationFrame(anim);
+    for (const id of ptrs.keys()) try { svg.setPointerCapture(id); } catch (err) {}
+  }
+});
+svg.addEventListener("pointermove", e => {
+  if (!ptrs.has(e.pointerId)) return;
+  ptrs.set(e.pointerId, [e.clientX, e.clientY]);
+  if (pinch && ptrs.size >= 2) {
+    e.preventDefault();
+    const [a, b] = [...ptrs.values()], r = svg.getBoundingClientRect();
+    const w = Math.min(W, Math.max(W / KMAX, pinch.vb.w * pinch.d / (Math.hypot(a[0] - b[0], a[1] - b[1]) || 1)));
+    const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2;
+    vb = clampVB({ x: pinch.mid[0] - (mx - r.left) / r.width * w, y: pinch.mid[1] - (my - r.top) / r.height * w * H / W, w, h: w * H / W });
+    applyView(); tip.hidden = true; return;
+  }
+  if (pan && e.pointerId === pan.id) {
+    const dx = e.clientX - pan.x, dy = e.clientY - pan.y;
+    if (!pan.on) {
+      if (Math.hypot(dx, dy) < 5) return;
+      if (K <= 1.001) { pan = null; return; }      // nothing to pan at full view; let the page scroll
+      pan.on = true; suppressClick = true; cancelAnimationFrame(anim); tip.hidden = true;
+      try { svg.setPointerCapture(e.pointerId); } catch (err) {}
+      wrap.classList.add("dragging");
+    }
+    const r = svg.getBoundingClientRect();
+    vb = clampVB({ x: pan.vb.x - dx / r.width * pan.vb.w, y: pan.vb.y - dy / r.height * pan.vb.h, w: pan.vb.w, h: pan.vb.h });
+    applyView();
+  }
+});
+const endPtr = e => {
+  ptrs.delete(e.pointerId);
+  if (ptrs.size < 2) pinch = null;
+  if (pan && pan.id === e.pointerId) { pan = null; wrap.classList.remove("dragging"); }
+  if (!ptrs.size) setTimeout(() => { suppressClick = false; }, 0);
+};
+["pointerup", "pointercancel", "lostpointercapture"].forEach(t => svg.addEventListener(t, endPtr));
+// paper titles appear next to dots once zoomed in
+let titleRaf = 0;
+function scheduleTitles() { if (!titleRaf) titleRaf = requestAnimationFrame(() => { titleRaf = 0; drawTitles(); }); }
+function drawTitles() {
+  gTitles.textContent = "";
+  const near = K >= 2.6;
+  lbls.forEach((t, i) => t.style.opacity = ((active === null || C[i].id === active) && perTopic[C[i].id] ? 1 : .15) * (near ? .35 : 1));
+  if (!near) return;
+  const cand = [];
+  for (let i = 0; i < P.length; i++) {
+    if (!dotOn[i]) continue;
+    if (PX[i] < vb.x || PX[i] > vb.x + vb.w || PY[i] < vb.y || PY[i] > vb.y + vb.h) continue;
+    cand.push(i);
+  }
+  if (cand.length > 500) return;
+  cand.sort((a, b) => (score[b] - score[a]) || ((+P[b].year || 0) - (+P[a].year || 0)));
+  const fs = 10.5 * S / K, cw = fs * .53, placed = [];
+  for (const i of cand) {
+    if (placed.length >= 70) break;
+    const t = P[i].title.length > 58 ? P[i].title.slice(0, 56) + "…" : P[i].title;
+    const x = PX[i] + 7 / K, y = PY[i] + fs * .35, box = [x, y - fs, x + t.length * cw, y + fs * .3];
+    if (box[2] > vb.x + vb.w + 40 / K && PX[i] - 7 / K - t.length * cw > vb.x) { box[0] = PX[i] - 7 / K - t.length * cw; box[2] = PX[i] - 7 / K; }
+    if (placed.some(b => !(box[2] < b[0] || box[0] > b[2] || box[3] < b[1] || box[1] > b[3]))) continue;
+    placed.push(box);
+    const el = mk("text", "ttl");
+    el.setAttribute("x", box[0]); el.setAttribute("y", y);
+    el.style.fontSize = fs + "px"; el.style.strokeWidth = 3 * S / K + "px"; el.textContent = t;
+    gTitles.appendChild(el);
+  }
+}
+function setHover(i) {
+  const prev = hoverI; hoverI = i;
+  if (prev >= 0) { dots[prev].setAttribute("stroke", "var(--panel)"); dots[prev].setAttribute("stroke-width", 1); sizeDot(prev); }
+  if (i >= 0) { dots[i].setAttribute("stroke", "var(--fg)"); dots[i].setAttribute("stroke-width", 2.5); sizeDot(i); gDots.appendChild(dots[i]); }
 }
 
 // ---- legend ----
 const legend = document.getElementById("legend");
-const order = [...C].sort((a,b)=>b.n-a.n);
+const order = [...C].sort((a, b) => b.n - a.n);
 const btns = {};
-order.forEach(cl=>{
-  const b = document.createElement("button"); b.type="button"; b.className="cl";
+order.forEach(cl => {
+  const b = document.createElement("button"); b.type = "button"; b.className = "cl";
   b.innerHTML = `<span class="sw" style="background:${col(cl.id)}"></span><span class="name">${esc(cl.label)}</span><span class="n">${cl.n}</span>
-  <span class="desc">${esc(cl.desc)}</span><span class="kw">${esc(cl.keywords.slice(0,6).join(" · "))}</span>`;
-  b.addEventListener("click",()=>setActive(active===cl.id?null:cl.id));
-  legend.appendChild(b); btns[cl.id]=b;
+  <span class="desc">${esc(cl.desc)}</span><span class="kw">${esc(cl.keywords.slice(0, 6).join(" · "))}</span>`;
+  b.addEventListener("click", () => setActive(active === cl.id ? null : cl.id, true));
+  legend.appendChild(b); btns[cl.id] = b;
 });
-document.getElementById("showall").addEventListener("click",()=>setActive(null));
+document.getElementById("showall").addEventListener("click", () => setActive(null, true));
 
 // ---- bars ----
-const maxn = Math.max(...C.map(c=>c.n));
-document.getElementById("bars").innerHTML = order.map(cl=>
-  `<div class="bar"><span class="bn" title="${esc(cl.label)}">${esc(cl.label)}</span><span class="track"><span class="fill" style="display:block;width:${cl.n/maxn*100}%;background:${col(cl.id)}"></span></span><span class="v">${cl.n}</span></div>`).join("");
+const maxn = Math.max(...C.map(c => c.n));
+document.getElementById("bars").innerHTML = order.map(cl =>
+  `<div class="bar"><span class="bn" title="${esc(cl.label)}">${esc(cl.label)}</span><span class="track"><span class="fill" style="display:block;width:${cl.n / maxn * 100}%;background:${col(cl.id)}"></span></span><span class="v">${cl.n}</span></div>`).join("");
 
 // ---- year heat ----
-const yrs = [...new Set(P.filter(p=>p.year).map(p=>+p.year))].sort();
+const yrs = [...new Set(P.filter(p => p.year).map(p => +p.year))].sort((a, b) => a - b);
 const minY = Math.max(yrs[0], 2017);
-const yearCols = yrs.filter(y=>y>=minY);
-const cnt = (c,y)=>P.filter(p=>p.cluster===c && p.year && (y===minY? (+p.year<=y) : +p.year===y)).length;
-let hmax = 1; order.forEach(cl=>yearCols.forEach(y=>hmax=Math.max(hmax,cnt(cl.id,y))));
+const yearCols = yrs.filter(y => y >= minY);
+const cnt = (c, y) => P.filter(p => p.cluster === c && p.year && (y === minY ? (+p.year <= y) : +p.year === y)).length;
+let hmax = 1; order.forEach(cl => yearCols.forEach(y => hmax = Math.max(hmax, cnt(cl.id, y))));
 document.getElementById("heat").innerHTML =
-  `<tr><th></th>${yearCols.map(y=>`<th>${y===minY?"≤"+y:y}</th>`).join("")}</tr>` +
-  order.map(cl=>`<tr><th class="rl">${esc(cl.short||cl.label)}</th>${yearCols.map(y=>{const v=cnt(cl.id,y);
-    return `<td style="background:color-mix(in srgb,${col(cl.id)} ${v? Math.round(12+v/hmax*70):0}%,transparent)">${v||""}</td>`}).join("")}</tr>`).join("");
+  `<tr><th></th>${yearCols.map(y => `<th>${y === minY ? "≤" + y : y}</th>`).join("")}</tr>` +
+  order.map(cl => `<tr><th class="rl">${esc(cl.short || cl.label)}</th>${yearCols.map(y => { const v = cnt(cl.id, y);
+    return `<td style="background:color-mix(in srgb,${col(cl.id)} ${v ? Math.round(12 + v / hmax * 70) : 0}%,transparent)">${v || ""}</td>`; }).join("")}</tr>`).join("");
 
-// ---- list ----
-const list = document.getElementById("papers"), q = document.getElementById("q");
-q.addEventListener("input",()=>{query=q.value.toLowerCase().trim(); render()});
-function render(){
-  dots.forEach((d,i)=>{const on = active===null||P[i].cluster===active; d.setAttribute("fill-opacity", on?.85:.08); d.setAttribute("r", on&&active!==null?5.6:4.6)});
-  lbls.forEach((t,i)=>t.style.opacity = active===null||C[i].id===active?1:.15);
-  Object.entries(btns).forEach(([id,b])=>b.classList.toggle("on",+id===active));
-  document.getElementById("listtitle").textContent = active===null? "All papers" : C[active].label;
-  const rows = P.filter(p=>(active===null||p.cluster===active) && (!query || (p.title+" "+p.summary+" "+(p.authors||"")+" "+(p.venue||"")).toLowerCase().includes(query)))
-    .sort((a,b)=>(+b.year||0)-(+a.year||0) || a.title.localeCompare(b.title));
-  list.innerHTML = rows.length? rows.map(p=>`<article class="p">
-    <div class="pt">${p.url?`<a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.title)}</a>`:esc(p.title)}</div>
-    <div class="meta"><span class="chip"><i style="background:${col(p.cluster)}"></i>${esc(C[p.cluster].short||C[p.cluster].label)}</span>${esc([p.authors,p.year,p.venue].filter(Boolean).join(" · "))}</div>
-    <div class="sum">${esc(p.summary)}</div></article>`).join("") : `<p class="hint" style="padding:14px 0">No papers match “${esc(query)}”.</p>`;
+// ---- search & list ----
+const $ = id => document.getElementById(id);
+const list = $("papers"), q = $("q"), countEl = $("count"), yFrom = $("y0"), yTo = $("y1"), sortSel = $("sort"), venueSel = $("venue"),
+  hasLink = $("haslink"), moreBtn = $("more"), resetBtn = $("reset"), suggEl = $("sugg"), dymEl = $("dym"), barsEl = $("yearbars"), axisEl = $("yearaxis");
+const norm = s => String(s ?? "").normalize("NFKD").replace(/[̀-ͯ]/g, "").toLowerCase();
+const reEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const vkey = v => String(v || "").replace(/\b(19|20)\d{2}\b/g, "").replace(/[(),]/g, " ").replace(/\s+/g, " ").trim();
+const IDX = P.map(p => ({ title: norm(p.title), author: norm(p.authors), venue: norm([p.venue, p.year].join(" ")), summary: norm(p.summary), vk: norm(vkey(p.venue)) }));
+const splitAuthors = s => String(s || "").replace(/\bet al\.?/gi, "").split(/,|;|\band\b/).map(x => x.trim()).filter(x => x.length > 2);
+const AUTH = new Map(), VEN = new Map();
+P.forEach(p => {
+  splitAuthors(p.authors).forEach(a => { const k = norm(a), o = AUTH.get(k) || { name: a, n: 0 }; o.n++; AUTH.set(k, o); });
+  const v = vkey(p.venue); if (v) { const k = norm(v), o = VEN.get(k) || { name: v, n: 0 }; o.n++; VEN.set(k, o); }
+});
+venueSel.insertAdjacentHTML("beforeend", [...VEN.entries()].filter(([, o]) => o.n >= 2).sort((a, b) => b[1].n - a[1].n).slice(0, 40)
+  .map(([k, o]) => `<option value="${esc(k)}">${esc(o.name)} (${o.n})</option>`).join(""));
+const YRS = [...new Set(P.filter(p => p.year).map(p => +p.year))].sort((a, b) => a - b);
+const YMIN = YRS[0], YMAX = YRS[YRS.length - 1];
+yFrom.innerHTML = yTo.innerHTML = YRS.map(y => `<option>${y}</option>`).join("");
+yFrom.value = YMIN; yTo.value = YMAX;
+const PAGE = 60;
+let clauses = [], terms = [], shown = PAGE, match = P.map(() => true), base = P.map(() => true), score = P.map(() => 0), perTopic = C.map(c => c.n), cur = [];
+
+const FIELDS = { author: "author", authors: "author", a: "author", title: "title", t: "title", venue: "venue", v: "venue", year: "venue", y: "venue" };
+function parse(s) {
+  const toks = [], re = /(-?)(?:([A-Za-z]+):)?(?:"([^"]*)"?|(\S+))/g; let m;
+  while ((m = re.exec(s))) {
+    if (!m[1] && !m[2] && (m[4] === "OR" || m[4] === "|")) { toks.push("OR"); continue; }
+    const f = m[2] && FIELDS[m[2].toLowerCase()];
+    let w = norm(m[3] ?? m[4] ?? "").trim();
+    if (m[2] && !f) w = norm(m[2] + ":") + w;
+    if (w && w !== "-") toks.push({ w, neg: !!m[1], field: f || null });
+  }
+  const out = []; let or = false;
+  for (const t of toks) {
+    if (t === "OR") { or = true; continue; }
+    const last = out[out.length - 1];
+    if (or && last && !last.neg && !t.neg) last.alts.push(t); else out.push({ alts: [t], neg: t.neg });
+    or = false;
+  }
+  return out;
 }
-function setActive(c){active=c; render()}
-render();
+const WT = { title: 5, author: 3, venue: 2, summary: 1 };
+function hitOf(x, t) {
+  let hit = 0;
+  for (const f of t.field ? [t.field] : ["title", "author", "venue", "summary"]) if (x[f].includes(t.w))
+    hit += new RegExp("(^|[^a-z0-9])" + reEsc(t.w)).test(x[f]) ? WT[f] * 2 : WT[f];
+  return hit;
+}
+function scoreOf(i) {
+  const x = IDX[i]; let sc = 0;
+  for (const c of clauses) {
+    const best = Math.max(...c.alts.map(t => hitOf(x, t)));
+    if (c.neg) { if (best) return -1; continue; }
+    if (!best) return -1;
+    sc += best;
+  }
+  return sc;
+}
+function hl(text) {
+  const pos = terms.slice().sort((a, b) => b.length - a.length), s = String(text ?? "");
+  if (!pos.length) return esc(s);
+  const plain = s.normalize("NFKD").replace(/[̀-ͯ]/g, "");
+  const re = new RegExp("(" + pos.map(reEsc).join("|") + ")", "gi");
+  if (plain.length !== s.length) return esc(s).replace(new RegExp("(" + pos.map(w => reEsc(esc(w))).join("|") + ")", "gi"), "<mark>$1</mark>");
+  let out = "", last = 0, m;
+  while ((m = re.exec(plain))) { if (!m[0]) { re.lastIndex++; continue; } out += esc(s.slice(last, m.index)) + "<mark>" + esc(s.slice(m.index, m.index + m[0].length)) + "</mark>"; last = m.index + m[0].length; }
+  return out + esc(s.slice(last));
+}
+const yearsSet = () => +yFrom.value !== YMIN || +yTo.value !== YMAX;
+function filtering() { return clauses.length > 0 || hasLink.checked || !!venueSel.value || yearsSet(); }
+function compute() {
+  clauses = parse(q.value);
+  terms = [...new Set(clauses.filter(c => !c.neg).flatMap(c => c.alts.map(t => t.w)))];
+  const lo = Math.min(+yFrom.value, +yTo.value), hi = Math.max(+yFrom.value, +yTo.value), ys = yearsSet(), vs = venueSel.value;
+  P.forEach((p, i) => {
+    let ok = (!hasLink.checked || !!p.url) && (!vs || IDX[i].vk === vs);
+    const sc = ok ? (clauses.length ? scoreOf(i) : 0) : -1;
+    base[i] = sc >= 0; score[i] = sc;
+    match[i] = base[i] && (!ys || (!!p.year && +p.year >= lo && +p.year <= hi));
+  });
+}
+function rowHTML(i) {
+  const p = P[i];
+  const au = splitAuthors(p.authors), etal = /et al/i.test(p.authors || "");
+  const auHTML = au.length ? au.map(a => `<button type="button" class="au" data-a="${esc(a)}">${hl(a)}</button>`).join(", ") + (etal ? " et al." : "") : "";
+  const vv = vkey(p.venue);
+  const venHTML = p.venue ? (vv && VEN.has(norm(vv)) ? `<button type="button" class="ve" data-v="${esc(norm(vv))}">${hl(p.venue)}</button>` : hl(p.venue)) : "";
+  const meta = [auHTML, p.year ? hl(String(p.year)) : "", venHTML].filter(Boolean).join(" · ");
+  return `<article class="p" data-i="${i}">
+    <div class="pt">${p.url ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">${hl(p.title)}</a>` : hl(p.title)}</div>
+    <div class="meta"><span class="chip"><i style="background:${col(p.cluster)}"></i>${esc(C[p.cluster].short || C[p.cluster].label)}</span><span>${meta}</span><button type="button" class="loc" data-i="${i}" title="Show this paper on the map">Show on map</button></div>
+    <div class="sum">${hl(p.summary)}</div></article>`;
+}
+function render() {
+  const f = filtering();
+  emph = active !== null || f;
+  perTopic = C.map(() => 0); P.forEach((p, i) => { if (match[i]) perTopic[p.cluster]++; });
+  P.forEach((p, i) => {
+    dotOn[i] = match[i] && (active === null || p.cluster === active);
+    dots[i].setAttribute("fill-opacity", dotOn[i] ? .85 : .07);
+    sizeDot(i);
+  });
+  Object.entries(btns).forEach(([id, b]) => {
+    b.classList.toggle("on", +id === active);
+    b.querySelector(".n").textContent = f ? `${perTopic[id]} / ${C[id].n}` : C[id].n;
+  });
+  scheduleTitles();
+  $("listtitle").textContent = active === null ? "All papers" : C[active].label;
+  const idx = P.map((p, i) => i).filter(i => match[i] && (active === null || P[i].cluster === active));
+  const mode = sortSel.value === "rel" && !terms.length ? "new" : sortSel.value;
+  const byNew = (a, b) => (+P[b].year || 0) - (+P[a].year || 0) || P[a].title.localeCompare(P[b].title);
+  idx.sort(mode === "rel" ? (a, b) => score[b] - score[a] || byNew(a, b)
+    : mode === "old" ? (a, b) => (+P[a].year || 9999) - (+P[b].year || 9999) || P[a].title.localeCompare(P[b].title)
+    : mode === "az" ? (a, b) => P[a].title.localeCompare(P[b].title) : byNew);
+  cur = idx;
+  const scope = active === null ? P.length : C[active].n;
+  countEl.textContent = f ? `${idx.length.toLocaleString()} of ${scope.toLocaleString()} papers` : `${scope.toLocaleString()} papers`;
+  resetBtn.hidden = !f;
+  zres.hidden = !f || !idx.length || idx.length === P.length;
+  list.innerHTML = idx.length ? idx.slice(0, shown).map(rowHTML).join("")
+    : `<p class="hint" style="padding:14px 0">No papers match${q.value.trim() ? ` “${esc(q.value.trim())}”` : " these filters"}${active !== null ? " in this topic" : ""}.</p>`;
+  const rest = idx.length - shown;
+  moreBtn.hidden = rest <= 0;
+  moreBtn.textContent = `Show ${Math.min(rest, PAGE * 2)} more (${rest.toLocaleString()} left)`;
+  $("csv").disabled = !idx.length;
+  drawYearBars(); didYouMean(idx.length); saveHash();
+}
+function update() { shown = PAGE; compute(); render(); }
+// results by year: bars ignore the year filter so the whole distribution stays visible
+function drawYearBars() {
+  const last = YMAX, first = Math.max(YMIN, last - 19), early = YMIN < first;
+  const keys = (early ? ["early"] : []).concat(Array.from({ length: last - first + 1 }, (_, k) => first + k));
+  const n = Object.fromEntries(keys.map(k => [k, 0]));
+  P.forEach((p, i) => { if (!base[i] || !p.year || (active !== null && p.cluster !== active)) return; const y = +p.year; n[y < first ? "early" : y]++; });
+  const mx = Math.max(1, ...keys.filter(k => k !== "early").map(k => n[k])), lo = Math.min(+yFrom.value, +yTo.value), hi = Math.max(+yFrom.value, +yTo.value);
+  barsEl.innerHTML = keys.map(k => {
+    const inR = k === "early" ? lo < first : (k >= lo && k <= hi), lab = k === "early" ? `before ${first}` : k;
+    return `<button type="button" data-y="${k}" class="${inR ? "" : "out"}" style="height:${Math.min(100, Math.max(2, n[k] / mx * 100))}%" title="${lab}: ${n[k]} papers" aria-label="${lab}: ${n[k]} papers"></button>`;
+  }).join("");
+  axisEl.innerHTML = `<span>${early ? "earlier" : first}</span><span>${Math.round((first + last) / 2)}</span><span>${last}</span>`;
+}
+barsEl.addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  const k = b.dataset.y, first = Math.max(YMIN, YMAX - 19);
+  const [lo, hi] = k === "early" ? [YMIN, YRS.filter(y => y < first).pop()] : [+k, +k];
+  if (+yFrom.value === lo && +yTo.value === hi) { yFrom.value = YMIN; yTo.value = YMAX; } else { yFrom.value = lo; yTo.value = hi; }
+  update();
+});
+// "did you mean" for words that appear nowhere in the collection
+let VOC = null;
+function lev(a, b, cap) {
+  if (Math.abs(a.length - b.length) > cap) return cap + 1;
+  let prev = Array.from({ length: b.length + 1 }, (_, j) => j);
+  for (let i = 1; i <= a.length; i++) {
+    const row = [i]; let mn = i;
+    for (let j = 1; j <= b.length; j++) { row[j] = Math.min(prev[j] + 1, row[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)); mn = Math.min(mn, row[j]); }
+    if (mn > cap) return cap + 1; prev = row;
+  }
+  return prev[b.length];
+}
+function didYouMean(n) {
+  dymEl.hidden = true; if (n || !terms.length) return;
+  if (!VOC) { VOC = new Map(); IDX.forEach(x => (x.title + " " + x.summary + " " + x.author).match(/[a-z][a-z0-9-]{2,}/g)?.forEach(w => VOC.set(w, (VOC.get(w) || 0) + 1))); }
+  let changed = false, txt = q.value;
+  for (const c of clauses) for (const t of c.alts) {
+    if (t.w.includes(" ") || t.w.length < 4 || IDX.some(x => (x.title + x.summary + x.author + x.venue).includes(t.w))) continue;
+    let best = null, bd = 3, bc = 0;
+    for (const [w, k] of VOC) { const d = lev(t.w, w, 2); if (d < bd || (d === bd && k > bc)) { best = w; bd = d; bc = k; } }
+    if (best) { txt = txt.replace(new RegExp(reEsc(t.w), "i"), best); changed = true; }
+  }
+  if (changed && norm(txt) !== norm(q.value)) { dymEl.innerHTML = `Did you mean <button type="button" id="dymbtn">${esc(txt)}</button>?`; dymEl.hidden = false; $("dymbtn").onclick = () => { q.value = txt; update(); }; }
+}
+// suggestions: topics, authors and venues as you type
+let sItems = [], sSel = -1;
+function lastToken() { const v = q.value, m = v.match(/(?:^|\s)(-?)([^\s"]*)$/); return m ? { tok: m[2], start: v.length - m[2].length } : null; }
+function suggest() {
+  const lt = lastToken(), raw = lt ? lt.tok.replace(/^\w+:/, "") : "", t = norm(raw);
+  sItems = [];
+  if (t.length >= 2) {
+    const wordStart = s => (" " + norm(s)).includes(" " + t);
+    C.forEach(c => { if (wordStart(c.label) || wordStart(c.short || "")) sItems.push({ k: "Topic", v: c.label, n: c.n, id: c.id }); });
+    sItems = sItems.slice(0, 3);
+    const au = [...AUTH.values()].filter(o => wordStart(o.name)).sort((a, b) => b.n - a.n).slice(0, 5).map(o => ({ k: "Author", v: o.name, n: o.n }));
+    const ve = [...VEN.entries()].filter(([, o]) => wordStart(o.name)).sort((a, b) => b[1].n - a[1].n).slice(0, 3).map(([key, o]) => ({ k: "Venue", v: o.name, n: o.n, key }));
+    sItems = sItems.concat(au, ve).slice(0, 9);
+  }
+  sSel = -1;
+  suggEl.innerHTML = sItems.map((s, i) => `<li role="option" id="sg${i}" data-i="${i}" aria-selected="false"><span class="k">${s.k}</span><span class="v">${hlS(s.v, t)}</span><span class="c">${s.n}</span></li>`).join("");
+  const open = sItems.length > 0 && document.activeElement === q;
+  suggEl.hidden = !open; q.setAttribute("aria-expanded", open);
+}
+function hlS(s, t) { const i = norm(s).indexOf(t); return i < 0 ? esc(s) : esc(s.slice(0, i)) + "<mark>" + esc(s.slice(i, i + t.length)) + "</mark>" + esc(s.slice(i + t.length)); }
+function pick(i) {
+  const s = sItems[i], lt = lastToken(); if (!s) return;
+  const before = lt ? q.value.slice(0, lt.start).replace(/-$/, "") : q.value;
+  if (s.k === "Topic") { q.value = before.trimEnd(); setActive(s.id, true); }
+  else if (s.k === "Author") q.value = before + `author:"${s.v}" `;
+  else { q.value = before.trimEnd(); venueSel.value = s.key; }
+  closeSugg(); update(); q.focus();
+}
+function closeSugg() { suggEl.hidden = true; q.setAttribute("aria-expanded", "false"); q.removeAttribute("aria-activedescendant"); }
+function moveSel(d) {
+  if (!sItems.length) return;
+  sSel = (sSel + d + sItems.length) % sItems.length;
+  [...suggEl.children].forEach((li, i) => li.setAttribute("aria-selected", i === sSel));
+  q.setAttribute("aria-activedescendant", "sg" + sSel); suggEl.children[sSel].scrollIntoView({ block: "nearest" });
+}
+suggEl.addEventListener("mousedown", e => { const li = e.target.closest("li"); if (li) { e.preventDefault(); pick(+li.dataset.i); } });
+q.addEventListener("keydown", e => {
+  if (!suggEl.hidden && (e.key === "ArrowDown" || e.key === "ArrowUp")) { e.preventDefault(); moveSel(e.key === "ArrowDown" ? 1 : -1); }
+  else if (e.key === "Enter") { if (!suggEl.hidden && sSel >= 0) { e.preventDefault(); pick(sSel); } else { closeSugg(); clearTimeout(timer); update(); } }
+  else if (e.key === "Escape") { if (!suggEl.hidden) { e.preventDefault(); closeSugg(); } else if (q.value) { e.preventDefault(); q.value = ""; update(); } }
+});
+q.addEventListener("blur", () => setTimeout(closeSugg, 120));
+document.addEventListener("pointerdown", e => { if (!suggEl.hidden && !e.target.closest(".qwrap")) closeSugg(); });
+q.addEventListener("focus", suggest);
+let timer; q.addEventListener("input", () => { suggest(); clearTimeout(timer); timer = setTimeout(update, 120); });
+[yFrom, yTo, sortSel, hasLink, venueSel].forEach(el => el.addEventListener("change", update));
+moreBtn.addEventListener("click", () => { shown += PAGE * 2; render(); });
+resetBtn.addEventListener("click", () => { q.value = ""; yFrom.value = YMIN; yTo.value = YMAX; hasLink.checked = false; venueSel.value = ""; sortSel.value = "rel"; update(); });
+list.addEventListener("click", e => {
+  const a = e.target.closest(".au"), v = e.target.closest(".ve"), l = e.target.closest(".loc");
+  if (a) { q.value = `author:"${a.dataset.a}"`; update(); $("listpanel").scrollIntoView({ behavior: reduce ? "auto" : "smooth" }); }
+  else if (v) { venueSel.value = v.dataset.v; update(); }
+  else if (l) locate(+l.dataset.i);
+});
+list.addEventListener("mouseover", e => { const art = e.target.closest("article[data-i]"); if (art && +art.dataset.i !== hoverI) { list.querySelector(".hov")?.classList.remove("hov"); art.classList.add("hov"); setHover(+art.dataset.i); } });
+list.addEventListener("mouseleave", () => { list.querySelector(".hov")?.classList.remove("hov"); setHover(-1); });
+$("csv").addEventListener("click", () => {
+  const cell = v => `"${String(v ?? "").replace(/"/g, '""')}"`;
+  const rows = [["title", "authors", "year", "venue", "topic", "url", "summary"]].concat(cur.map(i => { const p = P[i]; return [p.title, p.authors, p.year, p.venue, C[p.cluster].label, p.url, p.summary]; }));
+  const blob = new Blob(["﻿" + rows.map(r => r.map(cell).join(",")).join("\r\n")], { type: "text/csv;charset=utf-8" });
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+  a.download = (document.title.replace(/\W+/g, "-").replace(/^-|-$/g, "").toLowerCase() || "papers") + (q.value.trim() ? "-search" : "") + ".csv";
+  document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 0);
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "/" && !/^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement.tagName)) { e.preventDefault(); q.focus(); q.select(); }
+});
+// shareable state in the URL: #q=...&topic=3&from=2019&to=2026&venue=neurips&sort=new&link=1
+function saveHash() {
+  const h = new URLSearchParams();
+  if (q.value.trim()) h.set("q", q.value.trim());
+  if (active !== null) h.set("topic", active);
+  if (+yFrom.value !== YMIN) h.set("from", yFrom.value);
+  if (+yTo.value !== YMAX) h.set("to", yTo.value);
+  if (venueSel.value) h.set("venue", venueSel.value);
+  if (sortSel.value !== "rel") h.set("sort", sortSel.value);
+  if (hasLink.checked) h.set("link", "1");
+  const s = h.toString();
+  try { history.replaceState(null, "", s ? "#" + s : location.pathname + location.search); } catch (e) {}
+}
+function loadHash() {
+  try {
+    const h = new URLSearchParams(location.hash.slice(1));
+    if (h.get("q")) q.value = h.get("q");
+    const t = h.get("topic"); if (t !== null && C[+t]) active = +t;
+    if (YRS.includes(+h.get("from"))) yFrom.value = h.get("from");
+    if (YRS.includes(+h.get("to"))) yTo.value = h.get("to");
+    if (h.get("venue") && [...venueSel.options].some(o => o.value === h.get("venue"))) venueSel.value = h.get("venue");
+    if (["rel", "new", "old", "az"].includes(h.get("sort"))) sortSel.value = h.get("sort");
+    hasLink.checked = h.get("link") === "1";
+  } catch (e) {}
+}
+function setActive(c, zoom) {
+  active = c; shown = PAGE; render();
+  if (zoom) { if (c === null) resetView(); else fitIdx(P.map((p, i) => i).filter(i => P[i].cluster === c)); }
+}
+loadHash(); compute(); render(); applyView();
+let rsz; addEventListener("resize", () => { clearTimeout(rsz); rsz = setTimeout(applyView, 150); });
+if (active !== null) fitIdx(P.map((p, i) => i).filter(i => P[i].cluster === active));
 </script>
 
 </body></html>

@@ -18,16 +18,29 @@ Interactive literature maps of causal machine learning and interpretability rese
 
 Also: **Fairness in ML Topic Map** — 1,751 fairness and bias papers (2014–2026) in six themes: https://na679723.github.io/RESEARCH_MAP/topic_map.html
 
-## Searching
+## Using the maps
 
-Maps 2–9 share the same search box above the reading list:
+Maps 2–9 share the same controls.
+
+**Zoom and pan**
+
+- Zoom with the + / − buttons, a two-finger pinch, Ctrl/⌘ + scroll (or trackpad pinch), or a double-click; drag to pan once zoomed in
+- Clicking a topic in the list zooms to it; "Zoom to results" frames the papers that match a search
+- Zoom in past about 3× and paper titles appear next to the dots
+- "Show on map" on any paper in the list flies the map to it and highlights it; hovering a paper in the list highlights its dot
+
+**Search**
 
 - All words must match: `sparse autoencoder`
 - Exact phrase: `"counterfactual fairness"`
+- Either word: `bandit OR imitation`
 - Exclude a word: `causal -fairness`
 - One field only: `author:pearl`, `title:bandit`, `venue:neurips`, `year:2024`
-- Filter by year range, keep only papers with a link, and sort by best match, newest, oldest or title
-- The map and topic counts follow the search, matches are highlighted, and the URL updates so a search can be shared as a link (e.g. `causal-fairness.html#q=graph&from=2023`)
+- Suggestions for authors, venues and topics appear as you type (arrow keys + Enter to pick)
+- Filter by year range, venue, or papers with a link; the year histogram shows matches per year and a click on a bar filters to that year
+- Click an author or venue in a result to search for it; misspelled words get a "Did you mean" suggestion
+- The map and topic counts follow the search, matches are highlighted, and "Download results (CSV)" exports the current list
+- The URL updates as you search, so a search can be shared as a link (e.g. `causal-fairness.html#q=graph&from=2023`)
 - Press `/` to jump to the search box
 
 ## How the maps were made
