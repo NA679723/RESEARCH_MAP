@@ -15,12 +15,11 @@ Interactive literature maps of causal machine learning and interpretability rese
 | 7 | **Causal Fairness** | 850 | 19 | https://na679723.github.io/RESEARCH_MAP/causal-fairness.html |
 | 8 | **Mechanistic Interpretability** | 1,549 | 20 | https://na679723.github.io/RESEARCH_MAP/mechanistic-interpretability.html |
 | 9 | **Causal Abstraction** | 592 | 20 | https://na679723.github.io/RESEARCH_MAP/causal-abstraction.html |
-
-Also: **Fairness in ML Topic Map** — 1,751 fairness and bias papers (2014–2026) in six themes: https://na679723.github.io/RESEARCH_MAP/topic_map.html
+| + | **Fairness in ML** (2014–2026, six themes) | 1,751 | 26 | https://na679723.github.io/RESEARCH_MAP/topic_map.html |
 
 ## Using the maps
 
-Maps 2–9 share the same controls.
+All maps use the same layout and controls.
 
 **Zoom and pan**
 
@@ -50,7 +49,10 @@ Maps 2–9 share the same controls.
 3. **Label.** Keywords come from class-based TF-IDF; each topic name (e.g. "Counterfactual fairness", "Sparse autoencoders") was written by reading the cluster's keywords and member titles.
 4. **Visualize.** The map is a UMAP projection of the same vectors, lightly guided by the cluster labels so each topic reads as one region. Distances between regions are approximate.
 
-The Causal Inference atlas (#1) was built separately from arXiv preprints and the most-cited OpenAlex works matching "causal inference".
+Two maps were built differently and later converted to this common format, keeping their own papers, topics and map positions:
+
+- **Causal Inference** (#1) comes from every arXiv preprint whose title or abstract contains "causal inference" plus the 2,000 most-cited OpenAlex works matching the phrase, clustered with non-negative matrix factorization into 21 topics in three families. It has no paper summaries; OpenAlex entries show their citation count.
+- **Fairness in ML** comes from an earlier topic map of fairness and bias papers at machine learning, NLP and vision venues, with 26 topics in six themes. It has titles, first authors, venues and years but no links or summaries.
 
 ## Caveats
 
