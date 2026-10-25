@@ -2,7 +2,7 @@
 
 An interactive literature map of 703 papers on causal representation learning, grouped into 20 research themes (collected October 2026).
 
-**Live:** https://NA679723.github.io/crl-atlas/
+**Live:** [https://NA679723.github.io/crl-atlas/](https://na679723.github.io/CRL_MAP/)
 
 - Hover a dot on the map to see the paper; click a topic to isolate it
 - Search titles and summaries in the full reading list
