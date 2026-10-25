@@ -8,15 +8,27 @@ Interactive literature maps of causal machine learning and interpretability rese
 |---|---|---:|---:|---|
 | 1 | **Causal Inference** | 5,627 | 21 | https://na679723.github.io/RESEARCH_MAP/causal-inference-atlas_1.html |
 | 2 | **Causal Representation Learning** | 703 | 20 | https://na679723.github.io/RESEARCH_MAP/ |
-| 3 | **Causal Reinforcement Learning** | 1,060 | 20 | https://na679723.github.io/RESEARCH_MAP/causal-reinforcement-learning.html |
-| 4 | **Causal Mediation Analysis** | 880 | 20 | https://na679723.github.io/RESEARCH_MAP/causal-mediation-analysis.html |
-| 5 | **Counterfactual Reasoning** | 1,330 | 20 | https://na679723.github.io/RESEARCH_MAP/counterfactual-reasoning.html |
-| 6 | **Causal Effect Heterogeneity** | 1,236 | 20 | https://na679723.github.io/RESEARCH_MAP/causal-effect-heterogeneity.html |
+| 3 | **Causal Reinforcement Learning** | 1,061 | 20 | https://na679723.github.io/RESEARCH_MAP/causal-reinforcement-learning.html |
+| 4 | **Causal Mediation Analysis** | 884 | 20 | https://na679723.github.io/RESEARCH_MAP/causal-mediation-analysis.html |
+| 5 | **Counterfactual Reasoning** | 1,334 | 20 | https://na679723.github.io/RESEARCH_MAP/counterfactual-reasoning.html |
+| 6 | **Causal Effect Heterogeneity** | 1,242 | 20 | https://na679723.github.io/RESEARCH_MAP/causal-effect-heterogeneity.html |
 | 7 | **Causal Fairness** | 850 | 19 | https://na679723.github.io/RESEARCH_MAP/causal-fairness.html |
 | 8 | **Mechanistic Interpretability** | 1,549 | 20 | https://na679723.github.io/RESEARCH_MAP/mechanistic-interpretability.html |
 | 9 | **Causal Abstraction** | 592 | 20 | https://na679723.github.io/RESEARCH_MAP/causal-abstraction.html |
 
 Also: **Fairness in ML Topic Map** — 1,751 fairness and bias papers (2014–2026) in six themes: https://na679723.github.io/RESEARCH_MAP/topic_map.html
+
+## Searching
+
+Maps 2–9 share the same search box above the reading list:
+
+- All words must match: `sparse autoencoder`
+- Exact phrase: `"counterfactual fairness"`
+- Exclude a word: `causal -fairness`
+- One field only: `author:pearl`, `title:bandit`, `venue:neurips`, `year:2024`
+- Filter by year range, keep only papers with a link, and sort by best match, newest, oldest or title
+- The map and topic counts follow the search, matches are highlighted, and the URL updates so a search can be shared as a link (e.g. `causal-fairness.html#q=graph&from=2023`)
+- Press `/` to jump to the search box
 
 ## How the maps were made
 
