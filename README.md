@@ -15,6 +15,9 @@ Interactive literature maps of causal machine learning and interpretability rese
 | 7 | **Causal Fairness** | 850 | 19 | https://na679723.github.io/RESEARCH_MAP/causal-fairness.html |
 | 8 | **Mechanistic Interpretability** | 1,549 | 20 | https://na679723.github.io/RESEARCH_MAP/mechanistic-interpretability.html |
 | 9 | **Causal Abstraction** | 592 | 20 | https://na679723.github.io/RESEARCH_MAP/causal-abstraction.html |
+| 10 | **Causal Bounding** (partial identification) | 1,119 | 20 | https://na679723.github.io/RESEARCH_MAP/causal-bounding.html |
+| 11 | **Causal Identification** | 1,689 | 20 | https://na679723.github.io/RESEARCH_MAP/causal-identification.html |
+| 12 | **Sensitivity Analysis** (for causal inference) | 1,067 | 20 | https://na679723.github.io/RESEARCH_MAP/sensitivity-analysis.html |
 | + | **Fairness in ML** (2014–2026, six themes) | 1,751 | 26 | https://na679723.github.io/RESEARCH_MAP/topic_map.html |
 
 ## Using the maps
