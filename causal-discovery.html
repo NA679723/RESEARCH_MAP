@@ -299,11 +299,16 @@ const lbls = C.map(cl => {
 });
 function placeLabels() {
   const s0 = Math.min(1.6, Math.max(1, W / (svg.getBoundingClientRect().width || W)));
+  // keep labels clear of the zoom buttons in the top-right corner (in full-view map units)
+  const sr = svg.getBoundingClientRect(), cr = document.getElementById("zin").parentElement.getBoundingClientRect();
+  const ctlX = sr.width ? (cr.left - sr.left) * W / sr.width - 4 : W, ctlY = sr.height ? (cr.bottom - sr.top) * H / sr.height + 4 : 0;
   lbls.forEach((t, c) => {
     t.style.fontSize = 12.5 * s0 + "px"; t.style.strokeWidth = 4 * s0 + "px";
     const i = MED[c], half = (t.getComputedTextLength ? t.getComputedTextLength() : 80) / 2 + 6;
-    t.setAttribute("x", Math.min(Math.max(PX[i], half), W - half));
-    t.setAttribute("y", Math.max(PY[i] - 9 * s0, 14 * s0));
+    const y = Math.max(PY[i] - 9 * s0, 14 * s0);
+    const right = y - 14 * s0 < ctlY ? ctlX : W;
+    t.setAttribute("x", Math.min(Math.max(PX[i], half), right - half));
+    t.setAttribute("y", y);
   });
   const placed = [];          // nudge overlapping labels apart
   lbls.forEach(t => {
@@ -311,6 +316,7 @@ function placeLabels() {
     const hit = yy => placed.some(p => !(b.x + b.width < p.x || p.x + p.w < b.x || yy - b.height > p.y || yy < p.y - p.h));
     while (hit(y + dy) && k < 30) { k++; dy = (k % 2 ? -1 : 1) * Math.ceil(k / 2) * 8 * s0; }
     y = Math.min(Math.max(y + dy, 14 * s0), H - 4); t.setAttribute("y", y);
+    if (y - 14 * s0 < ctlY && b.x + b.width > ctlX) { t.setAttribute("x", ctlX - b.width / 2 - 2); }
     placed.push({ x: b.x, w: b.width, y: y, h: b.height });
   });
 }

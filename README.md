@@ -20,6 +20,8 @@ Interactive literature maps of causal machine learning and interpretability rese
 | 12 | **Sensitivity Analysis** (for causal inference) | 1,067 | 20 | https://na679723.github.io/RESEARCH_MAP/sensitivity-analysis.html |
 | 13 | **Causal Discovery** | 1,653 | 20 | https://na679723.github.io/RESEARCH_MAP/causal-discovery.html |
 | 14 | **CATE Estimation** | 1,280 | 19 | https://na679723.github.io/RESEARCH_MAP/cate-estimation.html |
+| 15 | **Time Series Causal Inference** | 1,546 | 19 | https://na679723.github.io/RESEARCH_MAP/time-series-causal-inference.html |
+| 16 | **Economic Causal Inference** | 1,922 | 20 | https://na679723.github.io/RESEARCH_MAP/economic-causal-inference.html |
 | + | **Fairness in ML** (2014–2026, six themes) | 1,751 | 26 | https://na679723.github.io/RESEARCH_MAP/topic_map.html |
 
 ## Using the maps
